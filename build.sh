@@ -184,17 +184,19 @@ ${MSBUILDEXE} /ver
 
 echo "INFO: Performing main build tasks..."
 
-MSBUILD="${MSBUILDEXE} /nologo /m /verbosity:minimal /p:Configuration=Release"
+MSBUILD="${MSBUILDEXE} /nologo /m /verbosity:minimal /p:Configuration=Release /property:SignAssembly=false"
 FRAME45="/p:TargetFrameworkVersion=v4.5"
 FRAME46="/p:TargetFrameworkVersion=v4.6"
-VS2013="/toolsversion:12.0"
+VS2013="/toolsversion:14.0"
 VS2015="/toolsversion:14.0"
-VS2013_CPP="/property:PlatformToolset=v120"
+VS2013_CPP="/property:PlatformToolset=v141"
 
-cd ${SCRATCH_DIR}/xml-rpc.net/src && ${MSBUILD} ${FRAME46} ${VS2013}
-cd ${SCRATCH_DIR}/xml-rpc_v45.net/src && ${MSBUILD} ${FRAME45} ${VS2013}
+cd ${SCRATCH_DIR}/xml-rpc.net/src && ${MSBUILD} ${FRAME46} ${VS2013} /t:xmlrpc
+cd ${SCRATCH_DIR}/xml-rpc_v45.net/src && ${MSBUILD} ${FRAME45} ${VS2013} /t:xmlrpc
+
 cd ${SCRATCH_DIR}/json.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json && ${MSBUILD} ${FRAME46} ${VS2015} Newtonsoft.Json.Net40.csproj
 cd ${SCRATCH_DIR}/json_v45.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json && ${MSBUILD} ${FRAME45} ${VS2015} Newtonsoft.Json.Net40.csproj
+
 cd ${SCRATCH_DIR}/log4net/src && ${MSBUILD} ${FRAME46} ${VS2013} log4net.vs2010.csproj
 cd ${SCRATCH_DIR}/sharpziplib/src && ${MSBUILD} ${FRAME46} ${VS2013}
 cd ${SCRATCH_DIR}/dotnetzip/DotNetZip-src/DotNetZip/Zip && ${MSBUILD} ${FRAME46} ${VS2013}
@@ -204,20 +206,20 @@ cd ${SCRATCH_DIR}/PuTTY/windows/VS2010 && ${MSBUILD} ${VS2013_CPP}
 #collect files in the output directory
 
 mkdir_clean ${OUTPUT_46_DIR}
-cp ${SCRATCH_DIR}/xml-rpc.net/bin/CookComputing.XmlRpcV2.{dll,pdb} \
-   ${SCRATCH_DIR}/json.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json/bin/Release/net46/Newtonsoft.Json.{dll,pdb} \
-   ${SCRATCH_DIR}/log4net/build/bin/net/2.0/release/log4net.{dll,pdb} \
-   ${SCRATCH_DIR}/sharpziplib/bin/ICSharpCode.SharpZipLib.{dll,pdb} \
-   ${SCRATCH_DIR}/dotnetzip/DotNetZip-src/DotNetZip/Zip/bin/Release/Ionic.Zip.{dll,pdb} \
-   ${SCRATCH_DIR}/DiscUtils/src/bin/Release/DiscUtils.{dll,pdb} \
+cp ${SCRATCH_DIR}/xml-rpc.net/bin/CookComputing.XmlRpcV2.dll \
+   ${SCRATCH_DIR}/json.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json/bin/Release/net46/Newtonsoft.Json.dll \
+   ${SCRATCH_DIR}/log4net/build/bin/net/2.0/release/log4net.dll \
+   ${SCRATCH_DIR}/sharpziplib/bin/ICSharpCode.SharpZipLib.dll \
+   ${SCRATCH_DIR}/dotnetzip/DotNetZip-src/DotNetZip/Zip/bin/Release/Ionic.Zip.dll \
+   ${SCRATCH_DIR}/DiscUtils/src/bin/Release/DiscUtils.dll\
    ${SCRATCH_DIR}/PuTTY/windows/VS2010/putty/Release/putty.exe \
    ${OUTPUT_46_DIR}
 cp ${REPO}/${XML_RPC_LICENSE}  ${OUTPUT_46_DIR}/LICENSE.CookComputing.XmlRpcV2.txt
 cp ${REPO}/${JSON_NET_LICENSE} ${OUTPUT_46_DIR}/LICENSE.Newtonsoft.Json.txt
 
 mkdir_clean ${OUTPUT_45_DIR}
-cp ${SCRATCH_DIR}/xml-rpc_v45.net/bin/CookComputing.XmlRpcV2.{dll,pdb} \
-   ${SCRATCH_DIR}/json_v45.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json/bin/Release/net45/Newtonsoft.Json.{dll,pdb} \
+cp ${SCRATCH_DIR}/xml-rpc_v45.net/bin/CookComputing.XmlRpcV2.dll \
+   ${SCRATCH_DIR}/json_v45.net/Newtonsoft.Json-10.0.2/Src/Newtonsoft.Json/bin/Release/net45/Newtonsoft.Json.dll \
    ${OUTPUT_45_DIR}
 cp ${REPO}/${XML_RPC_LICENSE} ${OUTPUT_45_DIR}/LICENSE.CookComputing.XmlRpcV2.txt
 cp ${REPO}/${XML_RPC_LICENSE} ${OUTPUT_45_DIR}/LICENSE.Newtonsoft.Json.txt
