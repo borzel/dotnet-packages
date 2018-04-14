@@ -170,13 +170,6 @@ mv ${DISCUTILS_SRC_DIR}/DiscUtils_204669b416f9/* ${DISCUTILS_SRC_DIR}
 cp ${PATCHES}/patch-discutils* ${OUTPUT_SRC_DIR}
 apply_patches "${PATCHES}/patch-discutils*" ${DISCUTILS_SRC_DIR}
 
-#prepare PuTTY
-
-REM PUTTY_SRC_DIR=${SCRATCH_DIR}/PuTTY
-REM mkdir_clean ${PUTTY_SRC_DIR}
-REM unzip -q -d ${PUTTY_SRC_DIR} ${SCRATCH_DIR}/putty-src.zip
-REM cp ${PUTTY_SRC_DIR}/version.h ${PUTTY_SRC_DIR}/licence.h ${PUTTY_SRC_DIR}/windows/
-
 MSBUILDEXE=MSBuild.exe
 
 echo "DEBUG: Printing MSBuild.exe version..."
@@ -189,7 +182,6 @@ FRAME45="/p:TargetFrameworkVersion=v4.5"
 FRAME46="/p:TargetFrameworkVersion=v4.6"
 VS2013="/toolsversion:14.0"
 VS2015="/toolsversion:14.0"
-VS2013_CPP="/property:PlatformToolset=v141"
 
 cd ${SCRATCH_DIR}/xml-rpc.net/src && ${MSBUILD} ${FRAME46} ${VS2013} /t:xmlrpc
 cd ${SCRATCH_DIR}/xml-rpc_v45.net/src && ${MSBUILD} ${FRAME45} ${VS2013} /t:xmlrpc
@@ -201,7 +193,6 @@ cd ${SCRATCH_DIR}/log4net/src && ${MSBUILD} ${FRAME46} ${VS2013} log4net.vs2010.
 cd ${SCRATCH_DIR}/sharpziplib/src && ${MSBUILD} ${FRAME46} ${VS2013}
 cd ${SCRATCH_DIR}/dotnetzip/DotNetZip-src/DotNetZip/Zip && ${MSBUILD} ${FRAME46} ${VS2013}
 cd ${SCRATCH_DIR}/DiscUtils/src && ${MSBUILD} ${FRAME46} ${VS2013}
-REM cd ${SCRATCH_DIR}/PuTTY/windows/VS2010 && ${MSBUILD} ${VS2013_CPP}
 
 #collect files in the output directory
 
@@ -212,7 +203,6 @@ cp ${SCRATCH_DIR}/xml-rpc.net/bin/CookComputing.XmlRpcV2.dll \
    ${SCRATCH_DIR}/sharpziplib/bin/ICSharpCode.SharpZipLib.dll \
    ${SCRATCH_DIR}/dotnetzip/DotNetZip-src/DotNetZip/Zip/bin/Release/Ionic.Zip.dll \
    ${SCRATCH_DIR}/DiscUtils/src/bin/Release/DiscUtils.dll\
-   REM ${SCRATCH_DIR}/PuTTY/windows/VS2010/putty/Release/putty.exe \
    ${OUTPUT_46_DIR}
 cp ${REPO}/${XML_RPC_LICENSE}  ${OUTPUT_46_DIR}/LICENSE.CookComputing.XmlRpcV2.txt
 cp ${REPO}/${JSON_NET_LICENSE} ${OUTPUT_46_DIR}/LICENSE.Newtonsoft.Json.txt
